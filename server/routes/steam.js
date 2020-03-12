@@ -30,7 +30,7 @@ router.get('/auth/signin/success', (req, res) => {
     }
 )
 
-router.get('/games', steamController.getGames, (req, res) => {
+router.get('/games', steamController.getGames, steamController.loadGameInfo, steamController.appendGameNames, (req, res) => {
     res.json(res.locals.games);
 })
 

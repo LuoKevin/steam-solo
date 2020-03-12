@@ -13,12 +13,15 @@ class Header extends Component {
         <ul className='menu'>
             <li>
                 <Link to='/'>Home</Link>
-            </li>{ !this.props.authed ? (
+            </li>
+            { !this.props.authed ? (
                 <li onClick={this.handleSignIn}>
                     <img src='client/assets/steam_signin.png'/>
                 </li>
-            ) : (
+            ) : (<div>
+                <li><Link to='/games'>Games</Link></li>
                 <li onClick={this.props.logout}>Log out</li>
+                </div>
             )
 
             }

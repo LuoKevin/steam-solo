@@ -5,6 +5,7 @@
  */
 
 import * as types from '../constants/actionTypes';
+import fetch from 'node-fetch';
 
 const intialState = {
     authenticated: false,
@@ -15,7 +16,20 @@ const intialState = {
 const steamReducer = (state=intialState, action) => {
     switch(action.type){
         case types.GET_PROFILE:
-
+        case types.GET_GAMES:
+            //Take the id and retrieve the list of games associated with a user (via backend express and steam API), then return it
+            return {
+                ...state,
+                games : action.payload
+            }
+        case types.RENDER_INFO:
+            const newGameArr = state.games.slice();
+            const targetGame = newGameArr.find(game => game.appid === action.payload);
+            targetGame.render = !targetGame.render;
+            return {
+                ...state,
+                games : newGameArr 
+            }
         case types.AUTHENTICATE:
             return {
                 ...state,

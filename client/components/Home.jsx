@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions.js';
+import GamesDisplay from './GamesDisplay.jsx';
 
 const MSTP = state => ({
     authed : state.steam.authenticated,
@@ -17,6 +18,8 @@ const MSTP = state => ({
 
 const MDTP = dispatch => ({
     auth : (id) => dispatch(actions.authenticate(id)),
+    getGames : (games) => dispatch(actions.getGames(games)),
+    renderInfo : (appid) => dispatch(actions.renderInfo(appid)),
     logout : () => dispatch(actions.logOut())
 })
 class Home extends Component {
@@ -25,7 +28,7 @@ class Home extends Component {
     }
     componentDidMount() {
         //  fetch user login status from server side
-        fetch('http://localhost:3000/auth/validate', {
+        fetch('/api/auth/validate', {
             credentials:'include',
         headers: {
             'Accept': "application/json",
@@ -49,7 +52,14 @@ class Home extends Component {
             <div>
                 <Header authed={this.props.authed} logout={this.props.logout} />
             </div>
+            <Switch>
+                <Route path='/games'>
+                    <GamesDisplay renderInfo={this.props.renderInfo} getGames={this.props.getGames} games={this.props.games} />
+                </Route>
+                <Route path='/'>
 
+                </Route>
+            </Switch>
 
         </div>
         )

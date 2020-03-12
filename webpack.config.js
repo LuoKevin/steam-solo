@@ -4,9 +4,12 @@ const path = require('path');
 module.exports = {
     devServer: {
     publicPath: '/build/',
-    // proxy: {
-    //     '/': 'http://localhost:3000'
-    //     }
+    proxy: {
+        '/api': {
+            target : 'http://localhost:3000',
+            pathRewrite: {'^/api' : ''}
+        }
+        }
     },
     mode : 'development',
     entry : ['./client/index.js'],
@@ -20,6 +23,10 @@ module.exports = {
                 test: /.jsx?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
+            },
+            {
+                test: /.css$/,
+                use: ['style-loader', 'css-loader']
             }
         ]
     }

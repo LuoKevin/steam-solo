@@ -1,0 +1,9 @@
+.gamesDisplay {
+    display: flex;
+    flex-wrap : wrap;
+    justify-content: center;
+}
+
+.gameBox {
+    padding: 5px;
+}
