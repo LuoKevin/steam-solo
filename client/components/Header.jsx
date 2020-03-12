@@ -8,6 +8,10 @@ import { Link } from "react-router-dom";
 import React, { Component } from "react";
 
 class Header extends Component {
+    constructor(props){
+        super(props);
+        this.handleLogOut = this.handleLogOut.bind(this);
+    }
     render () {
         return(
         <ul className='menu'>
@@ -20,7 +24,7 @@ class Header extends Component {
                 </li>
             ) : (<div>
                 <li><Link to='/games'>Games</Link></li>
-                <li onClick={this.props.logout}>Log out</li>
+                <li onClick={this.handleLogOut}>Log out</li>
                 </div>
             )
 
@@ -28,10 +32,25 @@ class Header extends Component {
         </ul>
     )}
 
-    handleSignIn(){
+    handleSignIn() {
         //  directs user to Steam signin page via the back end
         //  cookie session should be crated at front end
-        window.open('http://localhost:3000/auth/signin', '_self');
+        window.open('/api/auth/signin', '_self');
+    }
+
+    handleLogOut() {
+        
+        //Remember to invoke this.props.logout!
+        //make a post? request to the backend to signout
+        fetch('/api/auth/logout', 
+        {
+            method : 'POST'
+        })
+        //.then(raw => raw.json())
+        .then(data => {
+            console.log(data);
+            this.props.logout();
+        });
     }
 }
 

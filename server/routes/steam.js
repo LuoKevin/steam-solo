@@ -14,8 +14,8 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/auth/validate', (req, res) => {
-    if(req.cookies.id)
-        return res.status(200).json({id : req.cookies.id});
+    if(req.cookies.steamId)
+        return res.status(200).json({id : req.cookies.steamId});
     else
         return res.status(400).send('No user signed in!');
 })
@@ -25,10 +25,16 @@ router.get('/auth/signin', passport.authenticate('steam', {failureRedirect: '/'}
 router.get('/auth/signin/success', (req, res) => {
         // console.log(req.query);
         // console.log(req.body);
-        res.cookie('id', (req.query['openid.claimed_id']).match(/\d+$/g)[0])
+        res.cookie('steamId', (req.query['openid.claimed_id']).match(/\d+$/g)[0])
         res.redirect(CLIENT_URL);
     }
 )
+
+router.post('/auth/logout',(req, res) => {
+    //  delete id cookie and return
+    res.clearCookie('steamId');
+    res.json('Signed out successfully!');
+})
 
 router.get('/games', steamController.getGames, steamController.loadGameInfo, steamController.appendGameNames, (req, res) => {
     res.json(res.locals.games);

@@ -5,7 +5,7 @@ const steamController = {};
 
 //  get a user's games from Steam's API
 steamController.getGames = (req, res, next) => {
-    const apiCall = ` http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${req.cookies.id}`;
+    const apiCall = ` http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${req.cookies.steamId}`;
     fetch(apiCall)
     .then(raw => raw.json())
     .then(data => {
