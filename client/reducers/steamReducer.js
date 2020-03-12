@@ -5,17 +5,21 @@
  */
 
 import * as types from '../constants/actionTypes';
-import fetch from 'node-fetch';
 
 const intialState = {
     authenticated: false,
     id: null,
+    profile : {},
     games: []
 };
 
 const steamReducer = (state=intialState, action) => {
     switch(action.type){
         case types.GET_PROFILE:
+            return {
+                ...state,
+                profile : action.payload
+            }
         case types.GET_GAMES:
             //Take the id and retrieve the list of games associated with a user (via backend express and steam API), then return it
             return {

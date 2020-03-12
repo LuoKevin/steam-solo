@@ -40,4 +40,8 @@ router.get('/games', steamController.getGames, steamController.loadGameInfo, ste
     res.json(res.locals.games);
 })
 
+router.get('/profile', steamController.getProfile, (req, res) => {
+    res.status(200).json(res.locals.profile);
+})
+
 module.exports = router;

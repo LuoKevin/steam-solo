@@ -28,7 +28,7 @@ steamController.loadGameInfo = (req, res, next) => {
     });
 
     res.locals.games = gameArr;
-    console.log('RETURNING');
+    //console.log('RETURNING');
     next();
 }
 
@@ -38,10 +38,25 @@ steamController.appendGameNames = (req, res, next) => {
     .then(data => {
         const apps = data.applist.apps;
         res.locals.games.forEach(game => {
-            game.name = apps.find(app => app.appid === game.appid).name;
+            const target = apps.find(app => app.appid === game.appid);
+            if(target) game.name = target.name;
         })
         return next();
     })
 }
 
+steamController.getProfile = (req, res, next) => {
+    fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${req.cookies.steamId}`)
+    .then(raw => raw.json())
+    .then(data => {
+        const profile = data.response.players[0];
+        const profileObj = {
+            displayname : profile.personaname,
+            url : profile.profileurl,
+            avatar : profile.avatarfull,
+        };
+        res.locals.profile = profileObj;
+        next();
+    })
+}
 module.exports = steamController;

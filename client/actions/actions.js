@@ -7,8 +7,9 @@
 
 import * as types from '../constants/actionTypes';
 
-export const getProfile = () => ({
+export const getProfile = (profile) => ({
     type : types.GET_PROFILE,
+    payload : profile
 })
 
 export const getGames = (games) => ({

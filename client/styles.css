@@ -1,3 +1,24 @@
+* {
+    font-family: Arial;
+}
+
+ul {
+    list-style-type: none;
+}
+nav ul {
+    display: flex;
+}
+
+nav li {
+    padding: 14px 16px;
+}
+.profile {
+    display : flex;
+    justify-content: space-between;
+}
+
+
+
 .gamesDisplay {
     display: flex;
     flex-wrap : wrap;

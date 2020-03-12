@@ -9,16 +9,18 @@ import {
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions.js';
 import GamesDisplay from './GamesDisplay.jsx';
-
+import Profile from './Profile.jsx';
 const MSTP = state => ({
     authed : state.steam.authenticated,
     id : state.steam.id,
-    games : state.steam.games
+    games : state.steam.games,
+    profile : state.steam.profile
 })
 
 const MDTP = dispatch => ({
     auth : (id) => dispatch(actions.authenticate(id)),
     getGames : (games) => dispatch(actions.getGames(games)),
+    getProfile : (profile) => dispatch(actions.getProfile(profile)),
     renderInfo : (appid) => dispatch(actions.renderInfo(appid)),
     logout : () => dispatch(actions.logOut())
 })
@@ -44,6 +46,17 @@ class Home extends Component {
         }).catch(err => {
             console.log('Error in signing in: '+err);
         })
+
+        fetch('/api/profile')
+        .then(response => {
+            if(response.status === 200) return response.json();
+            else throw new Error('Failed to get profile information');
+        }).then(profile => {
+            //console.log(profile);
+            this.props.getProfile(profile);
+        }).catch(err => {
+            console.log('Error in obtaining profile: '+err);
+        })
     }
 
     render () {
@@ -57,7 +70,9 @@ class Home extends Component {
                     <GamesDisplay renderInfo={this.props.renderInfo} getGames={this.props.getGames} games={this.props.games} />
                 </Route>
                 <Route path='/'>
-
+            {this.props.authed ? (<Profile profile={this.props.profile} />)
+            : null
+            }
                 </Route>
             </Switch>
 

@@ -14,6 +14,7 @@ class Header extends Component {
     }
     render () {
         return(
+        <nav>
         <ul className='menu'>
             <li>
                 <Link to='/'>Home</Link>
@@ -22,14 +23,15 @@ class Header extends Component {
                 <li onClick={this.handleSignIn}>
                     <img src='client/assets/steam_signin.png'/>
                 </li>
-            ) : (<div>
+            ) : (< >
                 <li><Link to='/games'>Games</Link></li>
                 <li onClick={this.handleLogOut}>Log out</li>
-                </div>
+                </ >
             )
 
             }
         </ul>
+        </nav>
     )}
 
     handleSignIn() {
