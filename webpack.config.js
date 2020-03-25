@@ -9,7 +9,7 @@ module.exports = {
             target : 'http://localhost:3000',
             pathRewrite: {'^/api' : ''}
         }
-        }
+    }
     },
     mode : 'development',
     entry : ['./client/index.js'],
