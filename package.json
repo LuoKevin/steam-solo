@@ -22,7 +22,7 @@
   "homepage": "https://github.com/LuoKevin/steam-solo#readme",
   "devDependencies": {
     "openid-client": "^3.14.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "@babel/core": "^7.8.7",
